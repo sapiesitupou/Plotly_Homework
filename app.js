@@ -80,7 +80,58 @@ function getData(id) {
     });
 }  
 
+// 4. Display the sample metadata, i.e., an individual's demographic information.
+// Getting data for Demographics chart
+function getMetadata(id) {
+  // read the json file to get data
+  d3.json("samples.json").then(function(data) {
+      
+      var metadata = data.metadata;
+      console.log(metadata)
 
+      // filter metadata by id
+      var result = metadata.filter(meta => meta.id.toString() === id)[0];
+
+      // select class under demographic info
+      var demographicInfo = d3.select("#sample-metadata");
+      
+      // empty before adding new info
+      demographicInfo.html("");
+
+// 5. Display each key-value pair from the metadata JSON object somewhere on the page.
+      Object.entries(result).forEach(function(key) {   
+              demographicInfo.append("h6").text(key[0] + ": " + key[1]);    
+      });
+  });
+}
+
+// change event using id
+function optionChanged(id) {
+  getData(id);
+  getMetadata(id);
+}
+
+// function init for data
+function init() {
+  // select dropdown menu 
+  var dropdown = d3.select("#selDataset");
+
+  // read the data 
+  d3.json("samples.json").then(function(data) {
+      console.log(data)
+
+      // dropdwown menu for id
+      data.names.forEach(function(name) {
+          dropdown.append("option").text(name).property("value");
+      });
+
+      // functions to display the data and plot to page
+      getData(data.names[0]);
+      getMetadata(data.names[0]);
+  });
+}
+
+init();
 
 
 
