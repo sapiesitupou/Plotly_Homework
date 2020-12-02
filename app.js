@@ -32,3 +32,69 @@ function getData(id) {
           type:"bar",
           orientation: "h",
       };
+
+	  var data = [trace1];
+
+      // layout bar chart
+      var layout = {
+          title: "Top 10 OTU",
+          yaxis:{
+              tickmode:"linear",
+          },
+          margin: {
+              l: 100,
+              r: 50,
+              t: 50,
+              b: 50
+          }
+      };
+
+
+      // bar plot
+      Plotly.newPlot("bar", data, layout);
+    
+// 3. Create a bubble chart that displays each sample.
+      var trace2 = {
+          x: samples.otu_ids,
+          y: samples.sample_values,
+          mode: "markers",
+          marker: {
+              size: samples.sample_values,
+              color: samples.otu_ids,
+          },
+          text: samples.otu_labels
+      };
+
+      // layout bubble plot
+      var layout_b = {
+          xaxis:{title: "OTU ID"},
+          height: 500,
+          width: 1000
+      };
+
+      var data1 = [trace2];
+
+      // bubble plot
+      Plotly.newPlot("bubble", data1, layout_b); 
+
+    });
+}  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
